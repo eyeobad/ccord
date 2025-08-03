@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+
+     body {  @apply  text-white overflow-x-hidden font-sans text-base antialiased h-screen bg-black
+     } 
+     .img-shadow2 {
+    filter: drop-shadow(10px 30px 15px #3030307a);
+  }
+
+
+      }
