@@ -1,8 +1,5 @@
 import { FaCheckCircle } from 'react-icons/fa';
-import { motion } from 'framer-motion';
-
-
-
+import { motion, Variants } from 'framer-motion';
 
 export const pricingOptions = [
   {
@@ -36,14 +33,24 @@ export const pricingOptions = [
   }
 ];
 
-
-
-
-
-const cardVariants = {
+const cardVariants: Variants = {
   hidden: { opacity: 0, y: 50 },
-  visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 120, damping: 20 } },
-  hover: { scale: 1.05, transition: { type: "spring", stiffness: 300 } },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      type: 'spring' as const,
+      stiffness: 120,
+      damping: 20
+    }
+  },
+  hover: {
+    scale: 1.05,
+    transition: {
+      type: 'spring' as const,
+      stiffness: 300
+    }
+  },
   tap: { scale: 0.95 }
 };
 
@@ -116,14 +123,14 @@ const Pricing = () => {
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.6 + idx * 0.1 }}
                   >
-                    <FaCheckCircle className="mr-3 text-gray/60" />
+                    <FaCheckCircle className="mr-3 text-green-400" />
                     <span>{feature}</span>
                   </motion.li>
                 ))}
               </ul>
               <motion.a
                 href="#"
-                className="mt-8 bg-gradient-to-r  from-[#ee9453] to-[#e99b63] text-white text-center py-3 rounded-lg hover:from-[#9e5b2b] hover:to-[#e48b4c] duration-500 transition-colors"
+                className="mt-8 bg-gradient-to-r from-[#ee9453] to-[#e99b63] text-white text-center py-3 rounded-lg hover:from-[#9e5b2b] hover:to-[#e48b4c] duration-500 transition-colors"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.9 }}
