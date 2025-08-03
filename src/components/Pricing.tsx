@@ -42,8 +42,8 @@ export const pricingOptions = [
 
 const cardVariants = {
   hidden: { opacity: 0, y: 50 },
-  visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 120, damping: 20 } },
-  hover: { scale: 1.05, transition: { type: 'spring', stiffness: 300 } },
+  visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 120, damping: 20 } },
+  hover: { scale: 1.05, transition: { type: "spring", stiffness: 300 } },
   tap: { scale: 0.95 }
 };
 
