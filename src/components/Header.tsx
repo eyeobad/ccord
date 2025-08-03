@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion'; // ⬅ Added Variants import
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 
@@ -7,33 +7,28 @@ function Header() {
   const [isOpen, setIsOpen] = useState(false);
 
   // --- Animation Variants ---
-  // Variants for the container to orchestrate the animation
-  const navContainerVariants = {
+  const navContainerVariants: Variants = { // ⬅ Explicitly typed
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1, // Delays each child's animation
+        staggerChildren: 0.1,
       },
     },
   };
 
-  // Variants for each navigation item
-  const navItemVariants = {
+  const navItemVariants: Variants = { // ⬅ Explicitly typed
     hidden: { y: -20, opacity: 0 },
     visible: {
       y: 0,
       opacity: 1,
       transition: {
-        type: "spring",
+        type: "spring", // ✅ string literal, not string
         stiffness: 120,
         damping: 14,
       },
     },
   };
-
-
-
 
 const toggleMenu = () => {
 

@@ -8,7 +8,14 @@ function Hero() {
 <motion.div className='max-w-xl ml-[5%] z-10 mt-[90%] md:mt-[60%] lg:mt-0 p-6 ' 
  initial={{ opacity: 0, x: -100 }} // Start invisible and 100px to the left
       whileInView={{ opacity: 1, x: 0 }}   // Animate to visible and its original position
-      transition={{ duration: 1.5, ease: "easeOut" ,type:"spring", damping: 60,stiffness: 120, }} // Control the animation speed and easing
+   transition={{ 
+  duration: 1.5, 
+  ease: "easeOut", 
+  type: "spring" as const,
+  damping: 60,
+  stiffness: 120 
+}}
+// Control the animation speed and easing
       viewport={{ once: true }} // Ensures the animation only runs once
       
       
