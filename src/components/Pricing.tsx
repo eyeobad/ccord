@@ -1,6 +1,8 @@
-import React from "react";
 import { FaCheckCircle } from "react-icons/fa";
-import { motion, Variants } from "framer-motion";
+import { motion } from "framer-motion";
+import type { Variants } from "framer-motion";
+
+import React from "react";
 
 interface PricingOption {
   title: string;
@@ -41,44 +43,40 @@ const cardVariants: Variants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { type: "spring", stiffness: 120, damping: 20 },
+    transition: { type: "spring" as const, stiffness: 120, damping: 20 },
   },
-  hover: { scale: 1.05, transition: { type: "spring", stiffness: 300 } },
+  hover: {
+    scale: 1.05,
+    transition: { type: "spring" as const, stiffness: 300 },
+  },
   tap: { scale: 0.95 },
 };
 
 const Pricing: React.FC = () => {
   return (
-    <section className="mt-20 bg-black text-white/75 py-16 px-6 md:px-12">
-      {/* Heading */}
-      <div className="text-center mb-12">
-        <h2 className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-wide">
-          Pricing
-        </h2>
-        <div className="mt-4 h-[2px] w-full max-w-3xl mx-auto bg-white/20" />
-      </div>
-
-      {/* Cards */}
-      <div className="flex flex-wrap justify-center gap-6">
-        {pricingOptions.map((option) => (
+    <div className="mt-20 bg-black text-white/75 py-12 p-6 md:p-4">
+      <h2 className="text-3xl sm:text-5xl lg:text-6xl text-center mb-12 tracking-wide font-bold">
+        Pricing
+      </h2>
+      <div className="flex flex-wrap justify-center">
+        {pricingOptions.map((option, index) => (
           <motion.div
-            key={option.title}
-            className="w-full sm:w-80 lg:w-96"
+            key={index}
+            className="w-full sm:w-1/2 lg:w-1/3 p-4"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
             variants={cardVariants}
           >
             <motion.div
-              className="p-8 rounded-2xl bg-white/10 border border-white/20 backdrop-blur-xl flex flex-col min-h-[400px]"
+              className="p-8 rounded-2xl bg-white/10 border border-white/20 backdrop-blur-xl min-h-[400px] flex flex-col"
               whileHover="hover"
               whileTap="tap"
               variants={cardVariants}
             >
-              {/* Title */}
               <div>
                 <motion.p
-                  className="text-3xl sm:text-4xl font-semibold mb-2 text-white"
+                  className="text-3xl sm:text-4xl font-semibold mb-4 text-white"
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
                   transition={{ delay: 0.2 }}
@@ -87,7 +85,7 @@ const Pricing: React.FC = () => {
                 </motion.p>
                 {option.title === "Pro" && (
                   <motion.span
-                    className="inline-block bg-gradient-to-r from-[#ee9453] to-[#e99b63] text-transparent bg-clip-text text-sm font-medium"
+                    className="inline-block bg-gradient-to-r from-[#ee9453] to-[#e99b63] text-transparent bg-clip-text text-sm"
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     transition={{ delay: 0.3 }}
@@ -97,7 +95,6 @@ const Pricing: React.FC = () => {
                 )}
               </div>
 
-              {/* Price */}
               <div className="mt-6 mb-8">
                 <motion.span
                   className="text-5xl font-bold mr-2 text-white opacity-75"
@@ -107,38 +104,34 @@ const Pricing: React.FC = () => {
                 >
                   {option.price}
                 </motion.span>
-                {option.price !== "Custom" && (
-                  <motion.span
-                    className="text-sm text-white/50"
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    transition={{ delay: 0.5 }}
-                  >
-                    /month
-                  </motion.span>
-                )}
+                <motion.span
+                  className="text-sm text-white/50"
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  transition={{ delay: 0.5 }}
+                >
+                  /month
+                </motion.span>
               </div>
 
-              {/* Features */}
               <ul className="flex-1 space-y-4">
                 {option.features.map((feature, idx) => (
                   <motion.li
-                    key={`${option.title}-${idx}`}
+                    key={idx}
                     className="flex items-center"
                     initial={{ opacity: 0, x: -20 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.6 + idx * 0.1 }}
                   >
-                    <FaCheckCircle className="mr-3 text-gray-400" />
+                    <FaCheckCircle className="mr-3 text-gray/60" />
                     <span>{feature}</span>
                   </motion.li>
                 ))}
               </ul>
 
-              {/* Button */}
               <motion.a
                 href="#"
-                className="mt-8 bg-gradient-to-r from-[#ee9453] to-[#e99b63] text-white text-center py-3 rounded-lg hover:from-[#9e5b2b] hover:to-[#e48b4c] transition-colors duration-500"
+                className="mt-8 bg-gradient-to-r from-[#ee9453] to-[#e99b63] text-white text-center py-3 rounded-lg hover:from-[#9e5b2b] hover:to-[#e48b4c] duration-500 transition-colors"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.9 }}
@@ -151,7 +144,7 @@ const Pricing: React.FC = () => {
           </motion.div>
         ))}
       </div>
-    </section>
+    </div>
   );
 };
 

@@ -7,13 +7,7 @@ import image1 from "../assets/1.jpg";
 import image2 from "../assets/2.jpg";
 import image3 from "../assets/laptop.jpg";
 
-interface Project {
-  id: number;
-  title: string;
-  image: string;
-}
-
-const projectImages: Project[] = [
+const projectImages = [
   { id: 1, title: "3D Gaming Project", image: image1 },
   { id: 2, title: "Virtual Reality Experience", image: image2 },
   { id: 3, title: "Augmented Reality App", image: image3 },
@@ -21,7 +15,7 @@ const projectImages: Project[] = [
 
 gsap.registerPlugin(ScrollTrigger);
 
-const Firstsegment: React.FC = () => {
+const Firstsegment = () => {
   useGSAP(() => {
     // Heading animation
     gsap.fromTo(
@@ -29,8 +23,8 @@ const Firstsegment: React.FC = () => {
       { y: 100, opacity: 0 },
       {
         y: 0,
-        opacity: 0.7,
-        duration: 1.2,
+        opacity: 0.5,
+        duration: 0.8,
         ease: "power2.out",
         scrollTrigger: {
           trigger: "#vertical-section",
@@ -45,7 +39,7 @@ const Firstsegment: React.FC = () => {
       "#tdiv",
       { width: 0, opacity: 0 },
       {
-        width: "70%",
+        width: "60%",
         opacity: 1,
         duration: 1.2,
         ease: "power3.inOut",
@@ -59,18 +53,18 @@ const Firstsegment: React.FC = () => {
     );
 
     // Horizontal scroll
-    const scrollContainer = document.querySelector<HTMLElement>("#horizontal-scroll");
-    if (!scrollContainer) return;
-
     const horizontalScroll = gsap.to(".panel", {
       xPercent: -100 * (projectImages.length - 1),
       ease: "power1.out",
       scrollTrigger: {
-        trigger: scrollContainer,
+        trigger: "#horizontal-scroll",
         pin: true,
         scrub: 0.5,
         start: "top top",
-        end: () => `+=${scrollContainer.scrollWidth - window.innerWidth}`,
+        end: () => {
+          const el = document.querySelector("#horizontal-scroll") as HTMLElement | null;
+          return el ? `+=${el.scrollWidth - window.innerWidth}` : "+=0";
+        },
         snap: {
           snapTo: 1 / (projectImages.length - 1),
           duration: { min: 0.4, max: 0.6 },
@@ -81,13 +75,13 @@ const Firstsegment: React.FC = () => {
     });
 
     // Panel animations
-    gsap.utils.toArray<HTMLElement>(".panel").forEach((panel: HTMLElement) => {
-      const image = panel.querySelector<HTMLElement>(".project-image");
-      const imageTitle = panel.querySelector<HTMLElement>(".project-title");
+    gsap.utils.toArray<HTMLElement>(".panel").forEach((panel) => {
+      const image = panel.querySelector(".project-image") as HTMLElement | null;
+      const imageTitle = panel.querySelector(".project-title") as HTMLElement | null;
 
       const tl = gsap.timeline({
         scrollTrigger: {
-          trigger: panel,
+          trigger: panel as gsap.DOMTarget,
           containerAnimation: horizontalScroll,
           start: "left right",
           end: "right left",
@@ -102,13 +96,9 @@ const Firstsegment: React.FC = () => {
           { scale: 1, rotate: 0, opacity: 1, duration: 0.5 }
         );
       }
+
       if (imageTitle) {
-        tl.fromTo(
-          imageTitle,
-          { y: 30, opacity: 0 },
-          { y: -100, opacity: 1, duration: 0.3 },
-          0.2
-        );
+        tl.fromTo(imageTitle, { y: 30, opacity: 0 }, { y: -100, opacity: 1, duration: 0.3 }, 0.2);
       }
     });
   }, []);
@@ -118,7 +108,7 @@ const Firstsegment: React.FC = () => {
       className="overflow-hidden relative py-20 bg-black text-white"
       id="vertical-section"
     >
-      {/* Heading & divider line */}
+      {/* Heading & line */}
       <div className="container mx-auto px-4 mb-16 relative z-10 text-center">
         <h2
           className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6"
@@ -135,7 +125,7 @@ const Firstsegment: React.FC = () => {
 
       {/* Horizontal scroll */}
       <div id="horizontal-scroll" className="flex w-[300vw]">
-        {projectImages.map((project: Project) => (
+        {projectImages.map((project) => (
           <div
             key={project.id}
             className="panel w-screen relative flex items-center justify-center"

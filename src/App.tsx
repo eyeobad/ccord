@@ -3,7 +3,7 @@ import Hero from "./components/Hero";
 import AppBanner from "./components/Appdownload";
 import Pricing from "./components/Pricing";
 import Footer from "./components/Footer";
-import Firstsegment from "./components/Firstsegment";
+import Firstsegment from "./components/Firstsegment"
 
 export default function App() {
   return (
