@@ -49,7 +49,7 @@ const cardVariants = {
 
 const Pricing = () => {
   return (
-    <div className="mt-20 bg-black text-white/75 py-12">
+    <div className="mt-20 bg-black text-white/75 py-12 p-6 md:p-4">
       <h2 className="text-3xl sm:text-5xl lg:text-6xl text-center mb-12 tracking-wide font-bold">
         Pricing
       </h2>

@@ -38,10 +38,11 @@ function Hero() {
 </p>
 
 {/* buttons */}
-<div className='flex gap-4 mt-12'>
-    <a href="" className='border border-[#2a2a2a] py-3 md:py-3 px-3 md:px-4 rounded-full text-[0.65rem] md:text-base font-extrabold  md:font-semibold tracking-wider transition-all duration-300 hover:bg-[#1a1a1a]
+<div className='flex  gap-4 mt-12'>
+    <a href="" className='border border-[#2a2a2a] py-[10px] md:py-3 px-3 md:px-4 rounded-full  text-sm md:text-base font-semibold  md:font-semibold tracking-wider transition-all duration-300 hover:bg-[#1a1a1a]
     '>Documentation
-        <OpenInNewIcon className='  '/>
+    <div className='hidden md:inline-block'>
+        <OpenInNewIcon/></div>
     </a>
 
       <a href="" className='border border-[#2a2a2a] py-3 md:py-3 px-10 md:px-7 rounded-full sm:text-lg text-sm font-semibold tracking-wider transition-all duration-300 hover:bg-[#1a1a1a] bg-gray-300 text-black hover:text-white
