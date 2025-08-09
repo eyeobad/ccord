@@ -17,10 +17,10 @@ const projectImages = [
 gsap.registerPlugin(ScrollTrigger);
 
 const Firstsegment = () => {
-  // Track which images are loaded
-  const [loadedImages, setLoadedImages] = useState<boolean[]>(new Array(projectImages.length).fill(false));
+  const [loadedImages, setLoadedImages] = useState<boolean[]>(
+    new Array(projectImages.length).fill(false)
+  );
 
-  // Preload images and update state when loaded
   useEffect(() => {
     projectImages.forEach(({ image }, index) => {
       const img = new Image();
@@ -36,7 +36,6 @@ const Firstsegment = () => {
   }, []);
 
   useGSAP(() => {
-    // ... your GSAP animation code unchanged
     gsap.fromTo(
       "#h2",
       { y: 100, opacity: 0 },
@@ -79,7 +78,9 @@ const Firstsegment = () => {
         scrub: 0.5,
         start: "top top",
         end: () => {
-          const el = document.querySelector("#horizontal-scroll") as HTMLElement | null;
+          const el = document.querySelector(
+            "#horizontal-scroll"
+          ) as HTMLElement | null;
           return el ? `+=${el.scrollWidth - window.innerWidth}` : "+=0";
         },
         snap: {
@@ -92,8 +93,12 @@ const Firstsegment = () => {
     });
 
     gsap.utils.toArray<HTMLElement>(".panel").forEach((panel) => {
-      const image = panel.querySelector(".project-image") as HTMLElement | null;
-      const imageTitle = panel.querySelector(".project-title") as HTMLElement | null;
+      const image = panel.querySelector(
+        ".project-image"
+      ) as HTMLElement | null;
+      const imageTitle = panel.querySelector(
+        ".project-title"
+      ) as HTMLElement | null;
 
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -114,13 +119,21 @@ const Firstsegment = () => {
       }
 
       if (imageTitle) {
-        tl.fromTo(imageTitle, { y: 30, opacity: 0 }, { y: -100, opacity: 1, duration: 0.3 }, 0.2);
+        tl.fromTo(
+          imageTitle,
+          { y: 30, opacity: 0 },
+          { y: -100, opacity: 1, duration: 0.3 },
+          0.2
+        );
       }
     });
   }, []);
 
   return (
-    <main className="overflow-hidden relative py-20 bg-black text-white" id="vertical-section">
+    <main
+      className="overflow-hidden relative py-20 bg-black text-white"
+      id="vertical-section"
+    >
       {/* Heading & line */}
       <div className="container mx-auto px-4 mb-16 relative z-10 text-center">
         <h2
@@ -150,16 +163,20 @@ const Firstsegment = () => {
               )}
               {/* Actual image */}
               {loadedImages[index] && (
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="project-image w-full max-w-4xl h-auto rounded-2xl object-cover shadow-2xl"
-                  style={{ transform: "translateZ(0)", imageRendering: "auto" }}
-                />
+                <div className="clipped-card w-full max-w-4xl img-shadow2">
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="project-image w-full h-auto object-cover"
+                  />
+                </div>
               )}
-              <h3 className="project-title flex items-center gap-3 md:text-3xl text-xl font-bold text-white mt-8 z-10 cursor-pointer hover:text-gray-300 transition-colors duration-300">
-                {project.title} <SlShareAlt />
+              <h3 className="project-title text-white">
+                {project.title}
               </h3>
+              <p className="project-subtitle flex items-center justify-center gap-2">
+                Explore <SlShareAlt />
+              </p>
             </div>
           </div>
         ))}
