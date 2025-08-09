@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -16,8 +17,26 @@ const projectImages = [
 gsap.registerPlugin(ScrollTrigger);
 
 const Firstsegment = () => {
+  // Track which images are loaded
+  const [loadedImages, setLoadedImages] = useState<boolean[]>(new Array(projectImages.length).fill(false));
+
+  // Preload images and update state when loaded
+  useEffect(() => {
+    projectImages.forEach(({ image }, index) => {
+      const img = new Image();
+      img.src = image;
+      img.onload = () => {
+        setLoadedImages((prev) => {
+          const newLoaded = [...prev];
+          newLoaded[index] = true;
+          return newLoaded;
+        });
+      };
+    });
+  }, []);
+
   useGSAP(() => {
-    // Heading animation
+    // ... your GSAP animation code unchanged
     gsap.fromTo(
       "#h2",
       { y: 100, opacity: 0 },
@@ -34,7 +53,6 @@ const Firstsegment = () => {
       }
     );
 
-    // Divider line animation
     gsap.fromTo(
       "#tdiv",
       { width: 0, opacity: 0 },
@@ -52,7 +70,6 @@ const Firstsegment = () => {
       }
     );
 
-    // Horizontal scroll
     const horizontalScroll = gsap.to(".panel", {
       xPercent: -100 * (projectImages.length - 1),
       ease: "power1.out",
@@ -74,7 +91,6 @@ const Firstsegment = () => {
       },
     });
 
-    // Panel animations
     gsap.utils.toArray<HTMLElement>(".panel").forEach((panel) => {
       const image = panel.querySelector(".project-image") as HTMLElement | null;
       const imageTitle = panel.querySelector(".project-title") as HTMLElement | null;
@@ -104,10 +120,7 @@ const Firstsegment = () => {
   }, []);
 
   return (
-    <main
-      className="overflow-hidden relative py-20 bg-black text-white"
-      id="vertical-section"
-    >
+    <main className="overflow-hidden relative py-20 bg-black text-white" id="vertical-section">
       {/* Heading & line */}
       <div className="container mx-auto px-4 mb-16 relative z-10 text-center">
         <h2
@@ -125,18 +138,25 @@ const Firstsegment = () => {
 
       {/* Horizontal scroll */}
       <div id="horizontal-scroll" className="flex w-[300vw]">
-        {projectImages.map((project) => (
+        {projectImages.map((project, index) => (
           <div
             key={project.id}
             className="panel w-screen relative flex items-center justify-center"
           >
             <div className="relative w-full h-full flex flex-col items-center justify-center p-4 sm:p-8 md:p-12 lg:p-16">
-              <img
-                src={project.image}
-                alt={project.title}
-                className="project-image w-full max-w-4xl h-auto rounded-2xl object-cover shadow-2xl"
-                style={{ transform: "translateZ(0)", imageRendering: "auto" }}
-              />
+              {/* Skeleton placeholder */}
+              {!loadedImages[index] && (
+                <div className="w-full max-w-4xl h-64 rounded-2xl bg-gray-700 animate-pulse shadow-2xl" />
+              )}
+              {/* Actual image */}
+              {loadedImages[index] && (
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="project-image w-full max-w-4xl h-auto rounded-2xl object-cover shadow-2xl"
+                  style={{ transform: "translateZ(0)", imageRendering: "auto" }}
+                />
+              )}
               <h3 className="project-title flex items-center gap-3 md:text-3xl text-xl font-bold text-white mt-8 z-10 cursor-pointer hover:text-gray-300 transition-colors duration-300">
                 {project.title} <SlShareAlt />
               </h3>

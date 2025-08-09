@@ -146,7 +146,7 @@ function Header() {
             href=""
             className="text-base tracking-wider transition-colors hover:text-gray-300 z-50"
           >
-            RESOUR
+            RESOURCES
           </a>
         </nav>
       </motion.div>
