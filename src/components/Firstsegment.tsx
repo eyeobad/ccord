@@ -156,7 +156,7 @@ const Firstsegment = () => {
             key={project.id}
             className="panel w-screen relative flex items-center justify-center"
           >
-            <div className="relative w-full h-full flex flex-col items-center justify-center p-4 sm:p-8 md:p-12 lg:p-16">
+            <div className="relative w-full h-full flex flex-col items-center justify-center p-4 sm:p-8 md:p-12 lg:p-20">
               {/* Skeleton placeholder */}
               {!loadedImages[index] && (
                 <div className="w-full max-w-4xl h-64 rounded-2xl bg-gray-700 animate-pulse shadow-2xl" />
