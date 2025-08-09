@@ -7,7 +7,13 @@ import image1 from "../assets/1.jpg";
 import image2 from "../assets/2.jpg";
 import image3 from "../assets/laptop.jpg";
 
-const projectImages = [
+interface Project {
+  id: number;
+  title: string;
+  image: string;
+}
+
+const projectImages: Project[] = [
   { id: 1, title: "3D Gaming Project", image: image1 },
   { id: 2, title: "Virtual Reality Experience", image: image2 },
   { id: 3, title: "Augmented Reality App", image: image3 },
@@ -53,16 +59,18 @@ const Firstsegment = () => {
     );
 
     // Horizontal scroll
+    const scrollContainer = document.querySelector("#horizontal-scroll") as HTMLElement | null;
+    if (!scrollContainer) return;
+
     const horizontalScroll = gsap.to(".panel", {
       xPercent: -100 * (projectImages.length - 1),
       ease: "power1.out",
       scrollTrigger: {
-        trigger: "#horizontal-scroll",
+        trigger: scrollContainer,
         pin: true,
         scrub: 0.5,
         start: "top top",
-        end: () =>
-          `+=${document.querySelector("#horizontal-scroll").scrollWidth - window.innerWidth}`,
+        end: () => `+=${scrollContainer.scrollWidth - window.innerWidth}`,
         snap: {
           snapTo: 1 / (projectImages.length - 1),
           duration: { min: 0.4, max: 0.6 },
@@ -73,9 +81,9 @@ const Firstsegment = () => {
     });
 
     // Panel animations
-    gsap.utils.toArray(".panel").forEach((panel) => {
-      const image = panel.querySelector(".project-image");
-      const imageTitle = panel.querySelector(".project-title");
+    gsap.utils.toArray<HTMLElement>(".panel").forEach((panel) => {
+      const image = panel.querySelector(".project-image") as HTMLElement | null;
+      const imageTitle = panel.querySelector(".project-title") as HTMLElement | null;
 
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -87,11 +95,13 @@ const Firstsegment = () => {
         },
       });
 
-      tl.fromTo(
-        image,
-        { scale: 0.8, rotate: -10, opacity: 0 },
-        { scale: 1, rotate: 0, opacity: 1, duration: 0.5 }
-      );
+      if (image) {
+        tl.fromTo(
+          image,
+          { scale: 0.8, rotate: -10, opacity: 0 },
+          { scale: 1, rotate: 0, opacity: 1, duration: 0.5 }
+        );
+      }
       if (imageTitle) {
         tl.fromTo(imageTitle, { y: 30, opacity: 0 }, { y: -100, opacity: 1, duration: 0.3 }, 0.2);
       }
