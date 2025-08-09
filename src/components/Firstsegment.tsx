@@ -21,7 +21,7 @@ const projectImages: Project[] = [
 
 gsap.registerPlugin(ScrollTrigger);
 
-const Firstsegment = () => {
+const Firstsegment: React.FC = () => {
   useGSAP(() => {
     // Heading animation
     gsap.fromTo(
@@ -59,7 +59,7 @@ const Firstsegment = () => {
     );
 
     // Horizontal scroll
-    const scrollContainer = document.querySelector("#horizontal-scroll") as HTMLElement | null;
+    const scrollContainer = document.querySelector<HTMLElement>("#horizontal-scroll");
     if (!scrollContainer) return;
 
     const horizontalScroll = gsap.to(".panel", {
@@ -81,9 +81,9 @@ const Firstsegment = () => {
     });
 
     // Panel animations
-    gsap.utils.toArray<HTMLElement>(".panel").forEach((panel) => {
-      const image = panel.querySelector(".project-image") as HTMLElement | null;
-      const imageTitle = panel.querySelector(".project-title") as HTMLElement | null;
+    gsap.utils.toArray<HTMLElement>(".panel").forEach((panel: HTMLElement) => {
+      const image = panel.querySelector<HTMLElement>(".project-image");
+      const imageTitle = panel.querySelector<HTMLElement>(".project-title");
 
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -103,7 +103,12 @@ const Firstsegment = () => {
         );
       }
       if (imageTitle) {
-        tl.fromTo(imageTitle, { y: 30, opacity: 0 }, { y: -100, opacity: 1, duration: 0.3 }, 0.2);
+        tl.fromTo(
+          imageTitle,
+          { y: 30, opacity: 0 },
+          { y: -100, opacity: 1, duration: 0.3 },
+          0.2
+        );
       }
     });
   }, []);
@@ -113,7 +118,7 @@ const Firstsegment = () => {
       className="overflow-hidden relative py-20 bg-black text-white"
       id="vertical-section"
     >
-      {/* Heading & line */}
+      {/* Heading & divider line */}
       <div className="container mx-auto px-4 mb-16 relative z-10 text-center">
         <h2
           className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6"
@@ -130,7 +135,7 @@ const Firstsegment = () => {
 
       {/* Horizontal scroll */}
       <div id="horizontal-scroll" className="flex w-[300vw]">
-        {projectImages.map((project) => (
+        {projectImages.map((project: Project) => (
           <div
             key={project.id}
             className="panel w-screen relative flex items-center justify-center"

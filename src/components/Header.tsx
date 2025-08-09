@@ -1,13 +1,13 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
+import React, { useState } from "react";
+import { motion, Variants } from "framer-motion";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 
 const Header: React.FC = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   // --- Animation Variants ---
-  const navContainerVariants = {
+  const navContainerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -15,7 +15,7 @@ const Header: React.FC = () => {
     },
   };
 
-  const navItemVariants = {
+  const navItemVariants: Variants = {
     hidden: { y: -20, opacity: 0 },
     visible: {
       y: 0,
@@ -24,7 +24,7 @@ const Header: React.FC = () => {
     },
   };
 
-  const toggleMenu = (): void => {
+  const toggleMenu = () => {
     setIsOpen((prev) => !prev);
   };
 
@@ -46,18 +46,16 @@ const Header: React.FC = () => {
         initial="hidden"
         animate="visible"
       >
-        <motion.a href="#" variants={navItemVariants} className="hover:text-gray-300">
-          ABOUT US
-        </motion.a>
-        <motion.a href="#" variants={navItemVariants} className="hover:text-gray-300">
-          DOCS
-        </motion.a>
-        <motion.a href="#" variants={navItemVariants} className="hover:text-gray-300">
-          COMPANY
-        </motion.a>
-        <motion.a href="#" variants={navItemVariants} className="hover:text-gray-300">
-          RESOURCES
-        </motion.a>
+        {["ABOUT US", "DOCS", "COMPANY", "RESOURCES"].map((item) => (
+          <motion.a
+            key={item}
+            href="#"
+            variants={navItemVariants}
+            className="hover:text-gray-300"
+          >
+            {item}
+          </motion.a>
+        ))}
       </motion.nav>
 
       <motion.button
@@ -76,7 +74,11 @@ const Header: React.FC = () => {
         whileTap={{ scale: 1.2 }}
         whileHover={{ scale: 1.1 }}
       >
-        {isOpen ? <CloseIcon className="text-white" /> : <MenuIcon className="text-white" />}
+        {isOpen ? (
+          <CloseIcon className="text-white" />
+        ) : (
+          <MenuIcon className="text-white" />
+        )}
       </motion.button>
 
       {/* ====== MOBILE MENU ====== */}
@@ -89,18 +91,11 @@ const Header: React.FC = () => {
         }`}
       >
         <nav className="flex flex-col gap-6 items-center">
-          <a href="#" className="hover:text-gray-300">
-            ABOUT US
-          </a>
-          <a href="#" className="hover:text-gray-300">
-            DOCS
-          </a>
-          <a href="#" className="hover:text-gray-300">
-            COMPANY
-          </a>
-          <a href="#" className="hover:text-gray-300">
-            RESOURCES
-          </a>
+          {["ABOUT US", "DOCS", "COMPANY", "RESOURCES"].map((item) => (
+            <a key={item} href="#" className="hover:text-gray-300">
+              {item}
+            </a>
+          ))}
         </nav>
       </motion.div>
     </header>

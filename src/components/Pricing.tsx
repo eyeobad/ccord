@@ -1,6 +1,6 @@
-import { FC } from "react";
+import React from "react";
 import { FaCheckCircle } from "react-icons/fa";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 
 interface PricingOption {
   title: string;
@@ -36,7 +36,7 @@ export const pricingOptions: PricingOption[] = [
   },
 ];
 
-const cardVariants = {
+const cardVariants: Variants = {
   hidden: { opacity: 0, y: 50 },
   visible: {
     opacity: 1,
@@ -47,7 +47,7 @@ const cardVariants = {
   tap: { scale: 0.95 },
 };
 
-const Pricing: FC = () => {
+const Pricing: React.FC = () => {
   return (
     <section className="mt-20 bg-black text-white/75 py-16 px-6 md:px-12">
       {/* Heading */}
@@ -60,7 +60,7 @@ const Pricing: FC = () => {
 
       {/* Cards */}
       <div className="flex flex-wrap justify-center gap-6">
-        {pricingOptions.map((option, index) => (
+        {pricingOptions.map((option) => (
           <motion.div
             key={option.title}
             className="w-full sm:w-80 lg:w-96"
@@ -123,7 +123,7 @@ const Pricing: FC = () => {
               <ul className="flex-1 space-y-4">
                 {option.features.map((feature, idx) => (
                   <motion.li
-                    key={feature}
+                    key={`${option.title}-${idx}`}
                     className="flex items-center"
                     initial={{ opacity: 0, x: -20 }}
                     whileInView={{ opacity: 1, x: 0 }}
